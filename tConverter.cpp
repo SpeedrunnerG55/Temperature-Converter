@@ -1,4 +1,4 @@
-/**************************************
+/*************************************
 ** Temperture convertor             **
 ** By Douglas L                     **
 ** created 12/8/2017                **
@@ -12,17 +12,31 @@
 
 using namespace std;
 
-//convert celcious to faranheight
+//tool to convert celcious to fahrenheit
 double cToF(double c);
 
-//convert faranheight to celcious
+//tool to convert fahrenheit to celcious
 double fToC(double f);
 
-//convert cecious to kelvin
+//tool to convert cecious to kelvin
 double cToK(double c);
 
-//convert kelvin to cecious
+//tool to convert kelvin to cecious
 double kToC(double k);
+
+struct Temperture{
+  char type = '\0';
+  double magnitude;
+};
+
+//takes anny temperature type and converts to fahrenheit with proper conversion tools
+Temperture converToF(Temperture T);
+
+//takes anny temperature type and converts to cecious with proper conversion tools
+Temperture converToC(Temperture T);
+
+//takes anny temperature type and converts to Kelvin with proper conversion tools
+Temperture converToK(Temperture T);
 
 //custom input function
 #define getInput(output,input) cout << "| " << output << " >"; cin>>input
@@ -34,19 +48,13 @@ void LeftString(string str);
 void CenterString(string str);
 
 
-struct Temperture{
-  char type = '\0';
-  double magnitude;
-};
+
 
 //gets temperture from user and returns it
 Temperture getTemperture();
 
 //prints temperture and its type
 void printTemperture(Temperture T);
-
-//converts tempurture to another type while changing its magnatude to keep the value correct
-Temperture convertTemperture(Temperture T, char to);
 
 //display width
 int display_Width = 30;
@@ -77,9 +85,9 @@ int main(){
     getInput("",choice);
 
     switch (choice) {
-      case '1': T = convertTemperture(T,'F'); break;
-      case '2': T = convertTemperture(T,'C'); break;
-      case '3': T = convertTemperture(T,'K'); break;
+      case '1': T = converToF(T); break;
+      case '2': T = converToC(T); break;
+      case '3': T = converToK(T); break;
       case '4': T = getTemperture(); break;
       case 'q':
       case 'Q':
@@ -87,7 +95,7 @@ int main(){
       default:
       CenterString("Invalid operation");
     }
-
+    
   } while(running);
 
   //end program
@@ -147,61 +155,56 @@ void printTemperture(Temperture T){
   LeftString(message);
 }
 
-Temperture convertTemperture(Temperture T, char conversionType){
-  switch (conversionType) {
-    //Convert to F
-    case 'F':
-    switch (T.type) {
-      case 'K':
-      //K to C to F
-      T.magnitude = kToC(T.magnitude);
-      case 'C':
-      //C to F
-      T.magnitude = cToF(T.magnitude);
-      break;
-    }
-    T.type = 'F';
-    break;
-
-    //Convert to C
-    case 'C':
-    switch (T.type) {
-      case 'F':
-      //F to C
-      T.magnitude = fToC(T.magnitude);
-      break;
-      case 'K':
-      //C to F
-      T.magnitude = kToC(T.magnitude);
-      break;
-    }
-    T.type = 'C';
-    break;
-
-    //Convert to K
+Temperture converToF(Temperture T){
+  switch (T.type) {
     case 'K':
-    switch (T.type) {
-      case 'F':
-      //F to C to K
-      T.magnitude = fToC(T.magnitude);
-      case 'C':
-      //C to K
-      T.magnitude = cToK(T.magnitude);
-      break;
-    }
-    T.type = 'K';
+    //K to C to F
+    T.magnitude = kToC(T.magnitude);
+    case 'C':
+    //C to F
+    T.magnitude = cToF(T.magnitude);
     break;
   }
+  T.type = 'F';
   return T;
 }
 
-//convert celcious to faranheight
+Temperture converToC(Temperture T){
+  switch (T.type) {
+    case 'F':
+    //F to C
+    T.magnitude = fToC(T.magnitude);
+    break;
+    case 'K':
+    //C to F
+    T.magnitude = kToC(T.magnitude);
+    break;
+  }
+  T.type = 'C';
+  return T;
+}
+
+Temperture converToK(Temperture T){
+  switch (T.type) {
+    case 'F':
+    //F to C to K
+    T.magnitude = fToC(T.magnitude);
+    case 'C':
+    //C to K
+    T.magnitude = cToK(T.magnitude);
+    break;
+  }
+  T.type = 'K';
+  return T;
+}
+
+//convert celcious to fahrenheit
 double cToF(double c){
   CenterString("*converting C to F*");
   return c * 1.8 + 32;
 }
 
-//convert faranheight to celcious
+//convert fahrenheit to celcious
 double fToC(double f){
   CenterString("*converting F to C*");
   return (f - 32) / 1.8;
