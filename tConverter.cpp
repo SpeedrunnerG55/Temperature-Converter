@@ -12,52 +12,44 @@
 
 using namespace std;
 
+//Toolkit Functions
 //tool to convert celcious to fahrenheit
 double cToF(double c);
-
 //tool to convert fahrenheit to celcious
 double fToC(double f);
-
 //tool to convert cecious to kelvin
 double cToK(double c);
-
 //tool to convert kelvin to cecious
 double kToC(double k);
 
 struct Temperture{
-  char type = '\0';
+  char type;
   double magnitude;
 };
 
+//gets temperture from user and returns it
+Temperture getTemperture();
+//prints temperture and its type
+void printTemperture(Temperture T);
+
 //takes anny temperature type and converts to fahrenheit with proper conversion tools
 Temperture converToF(Temperture T);
-
 //takes anny temperature type and converts to cecious with proper conversion tools
 Temperture converToC(Temperture T);
-
 //takes anny temperature type and converts to Kelvin with proper conversion tools
 Temperture converToK(Temperture T);
 
 //custom input function
 #define getInput(output,input) cout << "| " << output << " >"; cin>>input
 
+//display width
+int display_Width = 30;
+
 //graphical functions
 string String_2Decimals(string arg);
 void printLine(char weight);
 void LeftString(string str);
 void CenterString(string str);
-
-
-
-
-//gets temperture from user and returns it
-Temperture getTemperture();
-
-//prints temperture and its type
-void printTemperture(Temperture T);
-
-//display width
-int display_Width = 30;
 
 int main(){
   bool running = true;
@@ -95,7 +87,7 @@ int main(){
       default:
       CenterString("Invalid operation");
     }
-    
+
   } while(running);
 
   //end program
