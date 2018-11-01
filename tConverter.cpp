@@ -4,11 +4,7 @@
 ** created 12/8/2017                **
 **************************************/
 
-
 #include <iostream>
-#include <string>
-#include <iomanip>
-#include <math.h>
 
 using namespace std;
 
